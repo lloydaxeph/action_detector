@@ -11,3 +11,6 @@ TRAINING_LOSSES = 'training_losses'
 VALIDATION_LOSSES = 'validation_losses'
 BEST_EPOCH = 'best_epoch'
 NO_IMPROVEMENT_COUNT = 'no_improvement_count'
+
+CNN = 'cnn'
+LSTM = 'lstm'

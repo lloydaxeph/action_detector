@@ -89,6 +89,12 @@ class GeneralUtils:
             print(f'Loaded data from {file_path}')
         return data
 
+    @staticmethod
+    def visualize_array(array, cmap='gray', axis='off'):
+        plt.imshow(array, cmap=cmap)
+        plt.axis(axis)
+        plt.show()
+
 
 class MediaPipeTracker:
     def __init__(self, detect_conf: float = 0.5, tracking_conf: float = 0.5):
@@ -202,7 +208,7 @@ class CaptureUtils:
             out.write(frame)
             results = self.mp_tracker.Detect(frame)
             frame = self.mp_tracker.draw_landmarks(frame=frame, results=results, face=False)
-            frame = self._add_frame_texts(frame=frame, frame_text=f'STARTING COLLECTION FOR "{action}." f:{n}')
+            frame = self.add_frame_texts(frame=frame, frame_text=f'STARTING COLLECTION FOR "{action}." f:{n}')
             cv.imshow(f'Capture Action {samp_num}', frame)
             cv.waitKey(1)
         cap.release()
@@ -224,12 +230,13 @@ class CaptureUtils:
                 f_frame_text = frame_text + count_down_str
 
             _, frame = cap.read()
-            self._add_frame_texts(frame=frame, frame_text=f_frame_text, color=color)
+            self.add_frame_texts(frame=frame, frame_text=f_frame_text, color=color)
             cv.imshow(f'Capture Action {samp_num}', frame)
             cv.waitKey(1)
         return cap
 
-    def _add_frame_texts(self, frame, frame_text: str, pos=(12, 25), font=cv.FONT_HERSHEY_SIMPLEX, font_scale=1,
-                         color=(0, 0, 255), thickness=2, line_type=cv.LINE_AA):
+    @staticmethod
+    def add_frame_texts(frame, frame_text: str, pos=(12, 25), font=cv.FONT_HERSHEY_SIMPLEX, font_scale=1,
+                        color=(0, 0, 255), thickness=2, line_type=cv.LINE_AA):
         cv.putText(frame, frame_text, pos, font, font_scale, color, thickness, line_type)
         return frame

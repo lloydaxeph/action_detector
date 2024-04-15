@@ -15,7 +15,6 @@ class CustomDataset(Dataset):
         """
         Input are video files and outputs their respective frames.
         Valid extensions: [mp4, avi, mkv, mov, wmv]
-        :param data_path: absolute path of the directory where the video files are located.
         """
         self.data_path = data_path
         self.mp_tracker = MediaPipeTracker()
@@ -36,6 +35,7 @@ class CustomDataset(Dataset):
         return len(self.data[LABELS])
 
     def __getitem__(self, idx: int) -> (list, list):
+        # TODO : Have an option to perform data augmentation
         return self.data[KEY_POINTS][idx], self.data[LABELS][idx]
 
     def _get_data(self) -> dict:
